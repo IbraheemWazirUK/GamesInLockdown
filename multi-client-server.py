@@ -27,7 +27,7 @@ def threaded_client(connection):
     
     while True:
         data = connection.recv(2048)
-        reply = split(data.decode('utf-8'))
+        reply = data.decode('utf-8').split()
         print("received at {}".format(datetime.now().time()))
         print("sent at {}".format(reply[2]))
         print("Pressing {reply[1]}")
