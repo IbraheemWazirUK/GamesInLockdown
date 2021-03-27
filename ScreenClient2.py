@@ -20,8 +20,8 @@ def recvall(conn, length):
     return buf
 
 
-def main(host='127.0.0.1', port=5000):
-    host = '0.0.0.0'
+def main(host='37.152.230.38', port=5007):
+    host = input("Enter host IP")
     watching = True
 
     sock = socket()
