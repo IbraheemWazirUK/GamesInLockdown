@@ -17,7 +17,18 @@ def retreive_screenshot(conn):
     with mss() as sct:
         # The region to capture
         rect = {'top': 0, 'left': 00, 'width': WIDTH, 'height': HEIGHT}
-
+        monitor_1 = sct.monitors[1]
+        img = sct.grab(monitor_1)
+        width, height = img.size
+        # send dimensions to client
+        size_len = (width.bit_length() + 7) // 8
+        conn.send(bytes([size_len]))
+        size_bytes = width.to_bytes(size_len, 'big')
+        conn.send(size_bytes)
+        size_len = (height.bit_length() + 7) // 8
+        conn.send(bytes([size_len]))
+        size_bytes = height.to_bytes(size_len, 'big')
+        conn.send(size_bytes)
         while 'recording':
             # Capture the screen
             monitor_1 = sct.monitors[1]

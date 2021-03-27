@@ -28,6 +28,10 @@ def main(host='127.0.0.1', port=5000):
     sock = socket()
     sock.connect((host, port))
     try:
+        width_len = int.from_bytes(sock.recv(1), byteorder='big')
+        width = int.from_bytes(sock.recv(width_len), byteorder='big')
+        height_len = int.from_bytes(sock.recv(1), byteorder='big')
+        height = int.from_bytes(sock.recv(height_len), byteorder='big')
 
         while watching:
 
@@ -51,9 +55,8 @@ def main(host='127.0.0.1', port=5000):
             pixels = decompress(pixels)
 
             # Create the Surface from raw pixels
-            img = Image.frombytes("RGB", (3072, 1920), pixels)  # Convert to PIL.Image
-            #img.show()
-            #img = pygame.image.frombuffer(pixels, (3072, 1920), 'RGB')
+            img = Image.frombytes("RGB", (width, height), pixels)  # Convert to PIL.Image
+
             open_cv_image = numpy.array(img)
             open_cv_image = open_cv_image[:, :, ::-1].copy()
             cv2.imshow('image', open_cv_image)
