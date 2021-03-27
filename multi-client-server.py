@@ -3,12 +3,15 @@ import os
 from _thread import *
 from datetime import datetime
 from pynput.keyboard import Key, Controller
+#import portforwardlib
 
 ServerSocket = socket.socket()
-host = '192.168.1.250'
+host = '192.168.0.1'
 port = 5001
 ThreadCount = 0
 keyboard = Controller()
+
+#result = portforwardlib.forwardPort(port, port, None, host, "False", "TCP", 0, None, False)
 
 try:
     ServerSocket.bind((host, port))
@@ -24,14 +27,14 @@ def threaded_client(connection):
     
     while True:
         data = connection.recv(2048)
-        reply = data.decode('utf-8')
-        validKeys = ['w', 'a', 's', 'd', 'g'] #Valid key presses
-        if reply[3] in validKeys:
-            print(f"Pressing {reply[3]}")
-            if reply[0] == 'p':
-                keyboard.press(reply[3])
-            elif reply[0] == 'r':
-                keyboard.release(reply[3])
+        reply = split(data.decode('utf-8'))
+        print("received at {}".format(datetime.now().time()))
+        print("sent at {}".format(reply[2]))
+        print("Pressing {reply[1]}")
+        if reply[0] == 'p':
+            keyboard.press(reply[1])
+        elif reply[0] == 'r':
+            keyboard.release(reply[1])
         if not data:
             break
     connection.close()
