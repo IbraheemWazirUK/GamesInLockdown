@@ -2,7 +2,6 @@ from socket import socket
 from zlib import decompress
 import cv2
 import numpy
-import pygame
 from PIL import Image
 
 WIDTH = 1000
