@@ -10,6 +10,33 @@ class Tournament:
 	def __init__(self, name)
 		self.name = name
 
+class Bracket(Tournament):
+
+	def __init__(self, name, no_of_players, players_per_game):
+		super(name)
+		self.players_per_game = players_per_game
+		self.no_of_players = no_of_players
+		self.left_spaces = [i for i in range(no_of_players)]
+		n = no_of_players
+		self.brackets = []
+		while n > 0:
+			n // = no_of_players
+			self.brackets.append([["" for i in range(players_per_game)] for j in range(n)])
+
+	def add_player(self, name):
+		i = random.randint(len(left_spaces))
+		space = left_spaces[i]
+		del left_spaces[i]
+		bracket_pos = space // players_per_game
+		pos_in_bracket = space % players_per_game
+		self.brackets[0][bracket_pos][pos_in_bracket] = name
+
+	def record_win(self, bracket_no, bracket_pos, name):
+		if bracket_no < len(self.brackets) - 1:
+			self.brackets[bracket_no+1][bracket_pos//players_per_game][bracket_pos%players_per_game] = name
+
+
+
 class Elimination(Tournament):
 	def __init__(self, name, no_of_eliminations):
 		super(name)
@@ -18,7 +45,10 @@ class Elimination(Tournament):
 
 	def add_player(self, name):
 		self.players.append(name)
-		
+
+	def eliminate(self, eliminations):
+		for player in eliminations:
+			self.players.remove(player)
 
 class League(Tournament):
 	def __init__(self, name, no_of_players, points_for_win = 1, points_for_draw = 0, points_for_loss = 0):
@@ -58,5 +88,3 @@ class League(Tournament):
 		del self.matches[i]
 		return match
 
-def create(name, no_of_players, tournament_type):
-	return Tournament(name, no_of_players, players_per_game, winners_per_game)
