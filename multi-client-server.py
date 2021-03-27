@@ -3,16 +3,18 @@ import os
 from _thread import *
 from datetime import datetime
 from pynput.keyboard import Key, Controller
-#import portforwardlib
+import portforwardlib
+import urllib.request
 
 ServerSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-host = '192.168.1.250'
+host = socket.gethostbyname(socket.gethostname())
 port = 5001
 ThreadCount = 0
 keyboard = Controller()
 
-#result = portforwardlib.forwardPort(port, port, None, host, "False", "TCP", 0, None, False)
-
+result = portforwardlib.forwardPort(port, port, None, host, "False", "TCP", 0, None, False)
+print(result)
+print(urllib.request.urlopen('https://ident.me').read().decode('utf8'))
 try:
     ServerSocket.bind((host, port))
 except socket.error as e:
