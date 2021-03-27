@@ -16,16 +16,16 @@ except socket.error as e:
 
 Response = ClientSocket.recv(1024)
 
-#pressed = set()
+pressed = set()
 
 def on_press(key):
-    #if key not in pressed :
-        #pressed.add(key)
-    r = "p {} {}".format(key, datetime.now().time())
-    ClientSocket.send(r.encode())
+    if key not in pressed :
+        pressed.add(key)
+        r = "p {} {}".format(key, datetime.now().time())
+        ClientSocket.send(r.encode())
         
 def on_release(key):
-    #pressed.discard(key)
+    pressed.discard(key)
     r = "r {} {}".format(key, datetime.now().time())
     ClientSocket.send(r.encode())
    
