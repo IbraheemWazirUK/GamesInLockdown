@@ -52,7 +52,8 @@ def retreive_screenshot(conn):
             # conn.sendall(pixels)
 
 
-def main(host='0.0.0.0', port=5000):
+def main(host='', port=5002):
+    host = socket.gethostbyname(socket.gethostname())
     sock = socket.socket()
     sock.bind((host, port))
     try:
