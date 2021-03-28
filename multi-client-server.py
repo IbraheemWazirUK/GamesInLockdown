@@ -33,6 +33,9 @@ def set_keys():
             listener.stop()
             return
         if key not in pressed:
+            key = str(key)
+            if key[0] == "'":
+                key = key[1:-1]
             pressed.add(str(key))
             print(key)
 
@@ -61,7 +64,7 @@ def threaded_client(connection):
         print(f"Full reply {reply}")
         if reply[1][0] == "'":
             reply[1] = reply[1][1:-1]
-        if len(reply[1]) == 1 or reply[1] in allowed_keys:
+        if reply[1] in allowed_keys:
             if reply[0] == 'p':
                 if reply[1] in allowedKeysMap:
                     keyboard.press(allowedKeysMap[reply[1]])
