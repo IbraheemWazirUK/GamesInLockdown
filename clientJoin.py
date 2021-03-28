@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from threading import Thread
-import ScreenServer2
+import ScreenClient2
 import client
 
 class ClientJoin(tk.Frame):
@@ -91,5 +91,5 @@ class ClientJoin(tk.Frame):
         ipAdr = self.ip.get()
         username = self.username.get()
         Thread(target = client.initiate, args=[ipAdr, username, 5006]).start()
-        Thread(target = ScreenServer2.main, args=[ipAdr, 5006]).start()
+        Thread(target = ScreenClient2.main, args=[ipAdr, 5007]).start()
         self.main.connect_client_host()
