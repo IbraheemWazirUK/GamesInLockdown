@@ -1,7 +1,8 @@
-pychal
 pynput.keyboard
 mss
 opencv-python
 zlib
 numpy
 PIL
+requests
+
